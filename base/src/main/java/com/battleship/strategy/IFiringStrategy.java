@@ -1,4 +1,4 @@
-package com.battleship.draft.strategy;
+package com.battleship.strategy;
 
 import java.util.Set;
 

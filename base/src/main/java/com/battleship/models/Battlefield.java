@@ -1,14 +1,18 @@
-package com.battleship.draft;
+package com.battleship.models;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.battleship.enums.Player;
-import com.battleship.models.Coordinate;
 import com.battleship.exceptions.ShipOverlapException;
+
+import lombok.Getter;
+
 import com.battleship.exceptions.InvalidPositionException;
 
+@Getter
 public class Battlefield {
     private int size;
     private final Map<String, Ship> ships = new HashMap<>();
@@ -18,15 +22,12 @@ public class Battlefield {
         ships.clear();
     }
 
-    
-
-    // ship actions
     public void addShip(Ship ship){
         try {
             validateShipPlacement(ship);
-            ships.put(ship.getId(), ship);
-
-            System.out.println("Ship added: " + ship.getId() + " at " + ship.getCenter() + " for player " + ship.getOwner());
+            ships.put(ship.getId() + ship.getOwner(), ship);
+            System.out.println("Ship " + ship.getId() + " added: " + "for " + ship.getOwner());
+            System.out.println(" Total ship count on board : " + ships.size());
         } catch (ShipOverlapException | InvalidPositionException e) {
             System.err.println("Error adding ship: " + e.getMessage());
         }
@@ -42,30 +43,37 @@ public class Battlefield {
         int x = center.getX();
         int y = center.getY();
 
-        if (x - shipSize / 2 < 0 || y - shipSize / 2 < 0 ||
-            x + shipSize / 2 > size || y + shipSize / 2 > size) {
+        if (x - (shipSize / 2) < 0 || y - (shipSize / 2) < 0 ||
+            x + (shipSize / 2) > size || y + (shipSize / 2) > size) {
             throw new InvalidPositionException("Ship goes out of battlefield bounds");
         }
         
         if (owner == Player.PLAYER_A) {
-            if (x + shipSize > size / 2) {
+            if (x + (shipSize / 2) > size / 2) {
                 throw new InvalidPositionException("Ship extends beyond PlayerA's territory");
             }
         } else {
-            if (x < size / 2) {
+
+            if (x - (shipSize / 2) < size / 2) {
                 throw new InvalidPositionException("Ship extends beyond PlayerB's territory");
             }
         }
         
-        List<Coordinate> newShipPositions = ship.getOccupiedPositions();
+        List<Coordinate> newShipPositions = ship.getOccupiedCoordinates();
         for (Ship existingShip : ships.values()) {
-            List<Coordinate> existingPositions = existingShip.getOccupiedPositions();
+            List<Coordinate> existingPositions = existingShip.getOccupiedCoordinates();
             for (Coordinate newPos : newShipPositions) {
                 if (existingPositions.contains(newPos)) {
                     throw new ShipOverlapException("Ship overlaps with existing ship: " + existingShip.getId());
                 }
             }
         }
+    }
+
+    public List<Ship> getShipsByPlayer(Player player) {
+        return ships.values().stream()
+                .filter(ship -> ship.getOwner() == player)
+                .collect(Collectors.toList());
     }
 
 

@@ -33,11 +33,11 @@ public class MainBattleshipGame {
     //     }
     // }
     
-    // public void viewBattleField() {
-    //     try {
-    //         gameService.viewBattleField();
-    //     } catch (GameException e) {
-    //         System.err.println("Error viewing battlefield: " + e.getMessage());
-    //     }
-    // }    
+    public void viewBattleField() {
+        try {
+            gameService.viewBattleField();
+        } catch (GameException e) {
+            System.err.println("Error viewing battlefield: " + e.getMessage());
+        }
+    }    
 }
