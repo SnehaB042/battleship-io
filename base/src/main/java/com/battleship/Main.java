@@ -11,6 +11,6 @@ public class Main {
         
         game.viewBattleField();
         
-        // game.startGame();
+        game.startGame();
     }
 }

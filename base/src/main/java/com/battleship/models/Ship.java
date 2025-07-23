@@ -22,12 +22,16 @@ public class Ship {
         this.isDestroyed = false;
     }
 
-    // public boolean occupiesPosition(Coordinate position) {
-    //     int midX = center.getX();
-    //     int midY = center.getY();
-    //     return position.getX() >= midX && position.getX() < midX + size &&
-    //            position.getY() >= midY && position.getY() < midY + size;
-    // }
+    public void setDestroyed(boolean destroyed) {
+        isDestroyed = destroyed;
+    }
+
+    public boolean occupiesCoordinate(Coordinate coordinate) {
+        int midX = center.getX();
+        int midY = center.getY();
+        return coordinate.getX() >= midX && coordinate.getX() < midX + size &&
+               coordinate.getY() >= midY && coordinate.getY() < midY + size;
+    }
     
     public List<Coordinate> getOccupiedCoordinates() {
         List<Coordinate> occupiedCoordinates = new ArrayList<>();
