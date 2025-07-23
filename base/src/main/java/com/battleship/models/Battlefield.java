@@ -23,7 +23,7 @@ public class Battlefield {
     public void addShip(Ship ship) throws GameException {
             validateShipPlacement(ship);
             ships.put(ship.getId() + ship.getOwner(), ship);
-            System.out.println(" -- Ship " + ship.getId() + " added for " + ship.getOwner());
+            System.out.println(" -- " + ship.getId() + " added for " + ship.getOwner());
     }
 
     // todo : write test cases for validating ship placement
@@ -66,9 +66,5 @@ public class Battlefield {
         return ships.values().stream()
                 .filter(ship -> ship.getOwner() == player)
                 .collect(Collectors.toList());
-    }
-
-
-
-    
+    }    
 }

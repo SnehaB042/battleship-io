@@ -51,7 +51,7 @@ public class GameService {
             Ship shipB = new Ship(id, size, new Coordinate(xB, yB), Player.PLAYER_B);
             battlefield.addShip(shipB);
 
-            System.out.println(" - Ship " + id + " added for both players");
+            System.out.println(" - " + id + " added for both players");
         }
         catch (GameException e) {
             throw e;
