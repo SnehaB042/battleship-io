@@ -1,7 +1,5 @@
 package com.battleship;
 
-import javax.swing.text.Position;
-
 import com.battleship.enums.Player;
 import com.battleship.exceptions.GameException;
 import com.battleship.models.Battlefield;
@@ -25,7 +23,7 @@ public class GameService {
             throw new GameException("Board size must be a positive even number");
         }
         battlefield.initialize(n);
-        gameInitialized = true;        
+        gameInitialized = true;
         System.out.println(String.format("Game initialized on a board of size : %d x %d", n, n));
     }
 
@@ -45,56 +43,57 @@ public class GameService {
         if (id == null || id.trim().isEmpty()) {
             throw new GameException("Ship ID cannot be null or empty");
         }
+
+        try{
+            Ship shipA = new Ship(id, size, new Coordinate(xA, yA), Player.PLAYER_A);
+            battlefield.addShip(shipA);
         
-        Ship shipA = new Ship(id, size, new Coordinate(xA, yA), Player.PLAYER_A);
-        battlefield.addShip(shipA);
-        
-        Ship shipB = new Ship(id, size, new Coordinate(xB, yB), Player.PLAYER_B);
-        battlefield.addShip(shipB);
-        
-        System.out.println("Ship " + id + " added for both players");
+            Ship shipB = new Ship(id, size, new Coordinate(xB, yB), Player.PLAYER_B);
+            battlefield.addShip(shipB);
+
+            System.out.println(" - Ship " + id + " added for both players");
+        }
+        catch (GameException e) {
+            throw e;
+        }
     }
 
     public void viewBattleField() throws GameException {
         if (!gameInitialized) {
-            // throw new GameNotInitializedException();
+            throw new GameException("Game not initialized");
         }
-        
+
         int size = battlefield.getSize();
         String[][] grid = new String[size][size];
-        
+
         // Initialize grid with empty spaces
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                grid[i][j] = "| "+ i + "," + j + " ";
+                grid[i][j] = "| " + i + "," + j + " ";
             }
         }
-        
+
         // Place ships on grid
         for (Ship ship : battlefield.getShipsByPlayer(Player.PLAYER_A)) {
             for (Coordinate pos : ship.getOccupiedCoordinates()) {
-                System.out.println("Placing ship " + ship.getId() + " at " + pos);
                 grid[pos.getX()][pos.getY()] = String.format("|A-%-2s", ship.getId());
             }
         }
-        
+
         for (Ship ship : battlefield.getShipsByPlayer(Player.PLAYER_B)) {
             for (Coordinate pos : ship.getOccupiedCoordinates()) {
                 grid[pos.getX()][pos.getY()] = String.format("|B-%-2s", ship.getId());
             }
         }
-        
+
         // Print grid
-        System.out.println("(" + size + ", " + size + ")");
+        System.out.println("Board / Battlefield :");
         for (int y = size - 1; y >= 0; y--) {
             for (int x = 0; x < size; x++) {
                 System.out.print(grid[x][y]);
             }
             System.out.println();
         }
-        System.out.println("(0, 0)");
     }
 
-
-    
 }

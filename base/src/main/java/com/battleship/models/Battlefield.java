@@ -6,11 +6,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.battleship.enums.Player;
-import com.battleship.exceptions.ShipOverlapException;
+import com.battleship.exceptions.GameException;
 
 import lombok.Getter;
-
-import com.battleship.exceptions.InvalidPositionException;
 
 @Getter
 public class Battlefield {
@@ -22,20 +20,14 @@ public class Battlefield {
         ships.clear();
     }
 
-    public void addShip(Ship ship){
-        try {
+    public void addShip(Ship ship) throws GameException {
             validateShipPlacement(ship);
             ships.put(ship.getId() + ship.getOwner(), ship);
-            System.out.println("Ship " + ship.getId() + " added: " + "for " + ship.getOwner());
-            System.out.println(" Total ship count on board : " + ships.size());
-        } catch (ShipOverlapException | InvalidPositionException e) {
-            System.err.println("Error adding ship: " + e.getMessage());
-        }
-
+            System.out.println(" -- Ship " + ship.getId() + " added for " + ship.getOwner());
     }
 
     // todo : write test cases for validating ship placement
-    private void validateShipPlacement(Ship ship) throws ShipOverlapException, InvalidPositionException {
+    private void validateShipPlacement(Ship ship) throws GameException {
         Coordinate center = ship.getCenter();
         int shipSize = ship.getSize();
         Player owner = ship.getOwner();
@@ -45,17 +37,17 @@ public class Battlefield {
 
         if (x - (shipSize / 2) < 0 || y - (shipSize / 2) < 0 ||
             x + (shipSize / 2) > size || y + (shipSize / 2) > size) {
-            throw new InvalidPositionException("Ship goes out of battlefield bounds");
+            throw new GameException("Ship goes out of battlefield bounds");
         }
         
         if (owner == Player.PLAYER_A) {
             if (x + (shipSize / 2) > size / 2) {
-                throw new InvalidPositionException("Ship extends beyond PlayerA's territory");
+                throw new GameException("Ship extends beyond PlayerA's territory");
             }
         } else {
 
             if (x - (shipSize / 2) < size / 2) {
-                throw new InvalidPositionException("Ship extends beyond PlayerB's territory");
+                throw new GameException("Ship extends beyond PlayerB's territory");
             }
         }
         
@@ -64,7 +56,7 @@ public class Battlefield {
             List<Coordinate> existingPositions = existingShip.getOccupiedCoordinates();
             for (Coordinate newPos : newShipPositions) {
                 if (existingPositions.contains(newPos)) {
-                    throw new ShipOverlapException("Ship overlaps with existing ship: " + existingShip.getId());
+                    throw new GameException("Ship overlaps with existing ship: " + existingShip.getId());
                 }
             }
         }
