@@ -1,0 +1,45 @@
+package com.battleship.draft;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.battleship.enums.Player;
+import com.battleship.models.Coordinate;
+
+import lombok.Getter;
+
+@Getter
+public class Ship {
+    private final String id;
+    private final int size;
+    private final Coordinate center;
+    private final Player owner;
+    private boolean isDestroyed;
+
+    public Ship(String id, int size, Coordinate center, Player owner) {
+        this.id = id;
+        this.size = size;
+        this.center = center;
+        this.owner = owner;
+        this.isDestroyed = false;
+    }
+
+    public boolean occupiesPosition(Coordinate position) {
+        int midX = center.getX();
+        int midY = center.getY();
+        return position.getX() >= midX && position.getX() < midX + size &&
+               position.getY() >= midY && position.getY() < midY + size;
+    }
+    
+    public List<Coordinate> getOccupiedPositions() {
+        List<Coordinate> positions = new ArrayList<>();
+        int midX = center.getX();
+        int midY = center.getY();
+        
+        for (int x = midX; x < midX + size; x++) {
+            for (int y = midY; y < midY + size; y++) {
+                positions.add(new Coordinate(x, y));
+            }
+        }
+        return positions;
+    }    
+}
