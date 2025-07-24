@@ -6,4 +6,4 @@ as the winner
 [Detailed requirements](./BattleShipGame.pdf)
 
 ## Sample run result
-![error](assets\test_result1.png?raw=true "Sample Run")
+![error](./assets/test_result1.png?raw=true "Sample Run")
