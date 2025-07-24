@@ -3,10 +3,10 @@ package com.battleship;
 
 
 public class MainBattleshipGame {
-    private final GameService gameService;
+    private final BattleshipGameService gameService;
     
     public MainBattleshipGame() {
-        this.gameService = new GameService();
+        this.gameService = new BattleshipGameService();
     }
     
     public void initGame(int n) {

@@ -9,14 +9,14 @@ import com.battleship.strategy.IFiringStrategy;
 import com.battleship.strategy.RandomFiringStrategy;
 import com.battleship.utils.WriterUtils;
 
-public class GameService {
+public class BattleshipGameService {
     private final Battlefield battlefield;
     private final IFiringStrategy firingStrategy;
     private Player currentPlayer;
     private boolean gameInitialized;
     private boolean gameStarted;
 
-    public GameService() {
+    public BattleshipGameService() {
         this.battlefield = new Battlefield();
         this.firingStrategy = new RandomFiringStrategy();
         this.currentPlayer = Player.PLAYER_A; // Default starting player
