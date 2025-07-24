@@ -1,6 +1,5 @@
 # Battleship.io
-Implementation of a simple battleship game to be played between two players until one comes out
-as the winner
+Implementation of a simple battleship game to be played between two players
 
 ## Problem Statement
 [Detailed requirements](./BattleShipGame.pdf)
