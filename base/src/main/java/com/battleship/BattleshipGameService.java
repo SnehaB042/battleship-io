@@ -10,6 +10,7 @@ import com.battleship.strategy.RandomFiringStrategy;
 import com.battleship.utils.WriterUtils;
 
 public class BattleshipGameService {
+    private final Object gameLock = new Object();
     private final Battlefield battlefield;
     private final IFiringStrategy firingStrategy;
     private Player currentPlayer;
@@ -25,15 +26,24 @@ public class BattleshipGameService {
     }
 
     public void initGame(int n) throws Exception {
-        if (n <= 0 || n % 2 != 0) {
-            throw new Exception("Board size must be a positive even number");
+        synchronized(gameLock){
+            if (gameInitialized) {
+                throw new Exception("Game already initialized");
+            }
+            
+            if (n <= 0 || n % 2 != 0) {
+                throw new Exception("Board size must be a positive even number");
+            }
+
+            battlefield.initialize(n);
+            gameInitialized = true;
+            System.out.println(String.format("Game initialized on a board of size : %d x %d", n, n));
         }
-        battlefield.initialize(n);
-        gameInitialized = true;
-        System.out.println(String.format("Game initialized on a board of size : %d x %d", n, n));
     }
 
     public void addShip(String id, int size, int xA, int yA, int xB, int yB) throws Exception {
+        synchronized(gameLock)
+        {
         if (!gameInitialized) {
             throw new Exception("Game not initialized");
         }
@@ -63,15 +73,19 @@ public class BattleshipGameService {
             throw e;
         }
     }
+    }
 
     public void viewBattleField() throws Exception {
+        synchronized(gameLock){
         if (!gameInitialized) {
             throw new Exception("Game not initialized");
         }
         WriterUtils.printBattleField(battlefield);
     }
+    }
 
     public void startGame() throws Exception {
+        synchronized(gameLock){
         if (!gameInitialized) {
             throw new Exception("Game not initialized");
         }
@@ -84,7 +98,7 @@ public class BattleshipGameService {
         currentPlayer = Player.PLAYER_A;
         
         System.out.println("Game started! " + currentPlayer + " goes first.");
-        
+    }
         while (!isGameOver()) {
             playTurn();
         }
@@ -93,6 +107,7 @@ public class BattleshipGameService {
     }
     
     private void playTurn() {
+        synchronized(gameLock){
         try {
             Player opponent = currentPlayer.getOpponent();
 
@@ -112,6 +127,7 @@ public class BattleshipGameService {
         } catch (Exception e) {
             System.err.println("Error during turn: " + e.getMessage());
         }
+    }
     }
     
     private boolean isGameOver() {

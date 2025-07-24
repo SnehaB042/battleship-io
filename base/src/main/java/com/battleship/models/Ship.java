@@ -12,7 +12,7 @@ public class Ship {
     private final int size;
     private final Coordinate center;
     private final Player owner;
-    private boolean isDestroyed;
+    private volatile boolean isDestroyed;
 
     public Ship(String id, int size, Coordinate center, Player owner) {
         this.id = id;
@@ -22,7 +22,7 @@ public class Ship {
         this.isDestroyed = false;
     }
 
-    public void setDestroyed(boolean destroyed) {
+    public synchronized void setDestroyed(boolean destroyed) {
         isDestroyed = destroyed;
     }
 
