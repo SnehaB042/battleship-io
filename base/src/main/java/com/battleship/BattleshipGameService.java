@@ -96,10 +96,10 @@ public class BattleshipGameService {
         try {
             Player opponent = currentPlayer.getOpponent();
 
-            Coordinate target = firingStrategy.generateTarget(battlefield.getSize(), opponent, battlefield.getFiredPositions());
-            battlefield.getFiredPositions().add(target);
+            Coordinate target = firingStrategy.generateTarget(battlefield.getSize(), opponent, battlefield.getFiredCoordinates());
+            battlefield.getFiredCoordinates().add(target);
 
-            Ship targetShip = battlefield.findShipAtPosition(target);
+            Ship targetShip = battlefield.findShipAtCoordinate(target);
             if(targetShip != null){
                 targetShip.setDestroyed(true);
                 WriterUtils.printFireResult(currentPlayer, target, opponent, targetShip, battlefield.getActiveShipCount(Player.PLAYER_A), battlefield.getActiveShipCount(Player.PLAYER_B));

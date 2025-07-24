@@ -32,11 +32,11 @@ public class ValidatorUtils {
             }
         }
         
-        List<Coordinate> newShipPositions = newShip.getOccupiedCoordinates();
+        List<Coordinate> newShipCoordinates = newShip.getOccupiedCoordinates();
         for (Ship existingShip : ships.values()) {
-            List<Coordinate> existingPositions = existingShip.getOccupiedCoordinates();
-            for (Coordinate newPos : newShipPositions) {
-                if (existingPositions.contains(newPos)) {
+            List<Coordinate> existingCoordinates = existingShip.getOccupiedCoordinates();
+            for (Coordinate newPos : newShipCoordinates) {
+                if (existingCoordinates.contains(newPos)) {
                     throw new Exception("Ship overlaps with existing ship: " + existingShip.getId());
                 }
             }

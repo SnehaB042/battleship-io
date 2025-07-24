@@ -6,5 +6,5 @@ import com.battleship.enums.Player;
 import com.battleship.models.Coordinate;
 
 public interface IFiringStrategy {
-   Coordinate generateTarget(int battlefieldSize, Player targetPlayer, Set<Coordinate> firedPositions);
+   Coordinate generateTarget(int battlefieldSize, Player targetPlayer, Set<Coordinate> firedCoordinates);
 }

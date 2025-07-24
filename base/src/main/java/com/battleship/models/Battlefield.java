@@ -16,12 +16,12 @@ import lombok.Getter;
 public class Battlefield {
     private int size;
     private final Map<String, Ship> ships = new HashMap<>();
-    private final Set<Coordinate> firedPositions = new HashSet<>();
+    private final Set<Coordinate> firedCoordinates = new HashSet<>();
 
     public void initialize(int size){
         this.size = size;
         ships.clear();
-        firedPositions.clear();
+        firedCoordinates.clear();
     }
 
     public void addShip(Ship ship) throws Exception {
@@ -42,7 +42,7 @@ public class Battlefield {
                 .count();
     }
 
-    public Ship findShipAtPosition(Coordinate coordinate) {
+    public Ship findShipAtCoordinate(Coordinate coordinate) {
         return ships.values().stream()
                 .filter(ship -> !ship.isDestroyed() && ship.occupiesCoordinate(coordinate))
                 .findFirst()

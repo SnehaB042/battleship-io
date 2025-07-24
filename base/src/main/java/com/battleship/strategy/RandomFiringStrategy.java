@@ -12,8 +12,8 @@ public class RandomFiringStrategy implements IFiringStrategy{
     private final Random random = new Random();
     
     @Override
-    public Coordinate generateTarget(int battlefieldSize, Player targetPlayer, Set<Coordinate> firedPositions) {
-        List<Coordinate> availablePositions = new ArrayList<>();
+    public Coordinate generateTarget(int battlefieldSize, Player targetPlayer, Set<Coordinate> firedCoordinates) {
+        List<Coordinate> availableCoordinates = new ArrayList<>();
         
         int startX = (targetPlayer == Player.PLAYER_A) ? 0 : battlefieldSize / 2;
         int endX = (targetPlayer == Player.PLAYER_A) ? battlefieldSize / 2 : battlefieldSize;
@@ -21,16 +21,16 @@ public class RandomFiringStrategy implements IFiringStrategy{
         for (int x = startX; x < endX; x++) {
             for (int y = 0; y < battlefieldSize; y++) {
                 Coordinate pos = new Coordinate(x, y);
-                if (!firedPositions.contains(pos)) {
-                    availablePositions.add(pos);
+                if (!firedCoordinates.contains(pos)) {
+                    availableCoordinates.add(pos);
                 }
             }
         }
         
-        if (availablePositions.isEmpty()) {
-            throw new RuntimeException("No more positions available to fire at");
+        if (availableCoordinates.isEmpty()) {
+            throw new RuntimeException("No more locations available to fire at");
         }
         
-        return availablePositions.get(random.nextInt(availablePositions.size()));
+        return availableCoordinates.get(random.nextInt(availableCoordinates.size()));
     }
 }
