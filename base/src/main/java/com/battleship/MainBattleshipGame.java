@@ -1,5 +1,7 @@
 package com.battleship;
 
+import com.battleship.service.BattleshipGameService;
+
 public class MainBattleshipGame {
     private final BattleshipGameService gameService;
     
