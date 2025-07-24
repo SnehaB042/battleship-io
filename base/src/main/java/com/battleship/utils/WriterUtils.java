@@ -15,10 +15,11 @@ public class WriterUtils {
     }
 
     public static void printFireResult(Player currentPlayer, Coordinate target, Player opponent, long playerAShipCount, long playerBShipCount) {
-        System.out.printf("%s's turn: Missile fired at %s : \"Missed\". Ships Remaining - %s:%d, %s:%d%n",
-                    currentPlayer, target, opponent,
-                    Player.PLAYER_A, playerAShipCount,
-                    Player.PLAYER_B, playerBShipCount);
+        System.out.printf("%s's turn: Missile fired at %s : \"Missed\". Ships Remaining - %s:%d, %s:%d%n", currentPlayer, target, Player.PLAYER_A, playerAShipCount, Player.PLAYER_B, playerBShipCount);
+        // System.out.printf("%s's turn: Missile fired at %s : \"Missed\". Ships Remaining - %s:%d, %s:%d%n",
+        //             currentPlayer, target, opponent,
+        //             Player.PLAYER_A, playerAShipCount,
+        //             Player.PLAYER_B, playerBShipCount);
     }
 
     public static void printBattleField(Battlefield battlefield) {

@@ -107,9 +107,8 @@ public class GameService {
             else {
                 WriterUtils.printFireResult(currentPlayer, target, opponent, battlefield.getActiveShipCount(Player.PLAYER_A), battlefield.getActiveShipCount(Player.PLAYER_B));
             }
-
-            WriterUtils.printBattleField(battlefield);
-            currentPlayer = opponent; 
+            // WriterUtils.printBattleField(battlefield);
+            currentPlayer = opponent;
         } catch (Exception e) {
             System.err.println("Error during turn: " + e.getMessage());
         }
