@@ -75,8 +75,8 @@ public class BattleshipGameService {
         if (!gameInitialized) {
             throw new Exception("Game not initialized");
         }
-        
-        if (battlefield.getShipsByPlayer(Player.PLAYER_A).isEmpty()) {
+
+        if ((battlefield.getShipsByPlayer(Player.PLAYER_A).isEmpty() || battlefield.getShipsByPlayer(Player.PLAYER_B).isEmpty()) && (battlefield.getShipsByPlayer(Player.PLAYER_A) == battlefield.getShipsByPlayer(Player.PLAYER_B))) {
             throw new Exception("No ships added to the game");
         }
         

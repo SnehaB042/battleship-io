@@ -4,10 +4,9 @@ public class Main {
     public static void main(String[] args) {
         MainBattleshipGame game = new MainBattleshipGame();
         
-        game.initGame(6);
+        game.initGame(8);
         
-        game.addShip("SH1", 2, 1, 5, 4, 4);
-        game.addShip("SH2", 1, 0, 0, 5, 0);
+        game.addShip("SH1", 2, 1, 1, 5, 1);
         
         game.viewBattleField();
         

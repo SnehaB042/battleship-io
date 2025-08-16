@@ -26,7 +26,6 @@ public class ValidatorUtils {
                 throw new Exception("Ship extends beyond PlayerA's territory");
             }
         } else {
-
             if (x - (shipSize / 2) < battlefieldSize / 2) {
                 throw new Exception("Ship extends beyond PlayerB's territory");
             }
